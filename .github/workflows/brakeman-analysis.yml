@@ -34,6 +34,10 @@ on:
         description: 'DefectDojo product name'
         default: '1'
         type: integer
+      endpoint: 
+        description: 'DefectDojo endpoint'
+        default: '/api/v2/engagements/'
+        type: string
 jobs:
   brakeman-scan:
     name: Brakeman Scan
