@@ -17,7 +17,23 @@ on:
   schedule:
     - cron: '34 2 * * 6'
   workflow_dispatch: 
-
+    inputs:
+      scan-name:
+        description: 'Name of the current scan'
+        default: 'brakeman-scan'
+        type: string
+      desc: 
+        description: 'What does this scan do'
+        default: 'Brakeman SAST scan'
+        type: string
+      version:
+        description: 'Current version of this product'
+        default: '0.1.1'
+        type: string
+      product:
+        description: 'DefectDojo product name'
+        default: '1'
+        type: integer
 jobs:
   brakeman-scan:
     name: Brakeman Scan
@@ -26,6 +42,10 @@ jobs:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v2
+      
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=date::$(date + '%Y-%m-%dT%H:%M:%S')"
 
     # Customize the ruby version depending on your needs
     - name: Setup Ruby
@@ -44,6 +64,21 @@ jobs:
       continue-on-error: true
       run: |
         brakeman -f sarif -o output.sarif.json .
+      
+    # Create a defectdojo engagement with the the results of the Brakeman scan
+    - name: Create new Engagement in DefectDojo
+      id: engagements
+      uses: ivanamat/defectdojo-engagements@v1
+      with:
+        token: ${{ secrets.defectdojo_token }}
+        defectdojo_url: ${{ secrets.defectdojo_url }}
+        defectdojo_endpoint: ${{ secrets.defectdojo_endpoint }}
+        name: ${{ format('{0}-{1}', ${{ github.event.inputs.scan-name }}, ${{ steps.date.outputs.date }} )}}
+        description: ${{ github.event.inputs.desc }}
+        version: ${{ github.event.inputs.version }}
+        target_start: ${{ steps.date.outputs.date }}
+        target_end: ${{ steps.date.outputs.date }}
+        product: ${{ github.event.inputs.product }}
 
     # Upload the SARIF file generated in the previous step
     - name: Upload SARIF
