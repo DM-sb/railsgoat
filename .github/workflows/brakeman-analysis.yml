@@ -76,7 +76,7 @@ jobs:
       with:
         token: ${{ secrets.defectdojo_token }}
         defectdojo_url: ${{ secrets.defectdojo_url }}
-        defectdojo_endpoint: ${{ secrets.defectdojo_endpoint }}
+        defectdojo_endpoint: ${{ github.event.inputs.endpoint }}
         name: ${{ format('{0}-{1}',github.event.inputs.scan-name,steps.date.outputs.date) }}
         description: ${{ github.event.inputs.desc }}
         version: ${{ github.event.inputs.version }}
