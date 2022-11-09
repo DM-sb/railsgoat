@@ -49,12 +49,15 @@ jobs:
       
     - name: Get current date as env
       id: date
-      run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_STATE
+      run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
   
     - name: Get date time as env
       id: datetime
-      run: echo "datetime=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_STATE
-
+      run: echo "datetime=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_OUTPUT
+      
+    - name: Echo date
+      run: echo '${{ steps.date.outputs.date }}'
+        
     # Customize the ruby version depending on your needs
     - name: Setup Ruby
       uses: ruby/setup-ruby@f20f1eae726df008313d2e0d78c5e602562a1bcf
@@ -81,11 +84,11 @@ jobs:
         token: ${{ secrets.defectdojo_token }}
         defectdojo_url: ${{ secrets.defectdojo_url }}
         defectdojo_endpoint: ${{ github.event.inputs.endpoint }}
-        name: ${{ format('{0}-{1}',github.event.inputs.scan-name,env.datetime) }}
+        name: ${{ format('{0}-{1}', github.event.inputs.scan-name, steps.date.outputs.datetime ) }}
         description: ${{ github.event.inputs.desc }}
         version: ${{ github.event.inputs.version }}
-        target_start: ${{ env.date }}
-        target_end: ${{ env.date }}
+        target_start: ${{ steps.date.outputs.date  }}
+        target_end: ${{ steps.date.outputs.date  }}
         product: ${{ github.event.inputs.product }}
         
     - name: Show DefectDojo response
