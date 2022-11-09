@@ -83,6 +83,11 @@ jobs:
         target_start: ${{ steps.date.outputs.date }}
         target_end: ${{ steps.date.outputs.date }}
         product: ${{ github.event.inputs.product }}
+        
+    - name: Show DefectDojo response
+      run: |
+        set -e
+        printf '%s\n' '${{ steps.engagements.outputs.response }}'
 
     # Upload the SARIF file generated in the previous step
     - name: Upload SARIF
