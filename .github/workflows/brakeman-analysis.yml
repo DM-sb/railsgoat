@@ -47,9 +47,15 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
       
-    - name: Get current date
+    - name: Get current date as env
       id: date
-      run: echo "::set-output name=date::$(date + '%Y-%m-%dT%H:%M:%S')"
+      run: |
+        echo "{date}={$(date +'%Y-%m-%d')}" >> $GITHUB_STATE
+        
+    - name: Get date time as env
+      id: datetime
+      run: |
+        echo "{datetime}={$(date +'%Y-%m-%dT%H:%M:%S')}" >> $GITHUB_STATE
 
     # Customize the ruby version depending on your needs
     - name: Setup Ruby
@@ -77,11 +83,11 @@ jobs:
         token: ${{ secrets.defectdojo_token }}
         defectdojo_url: ${{ secrets.defectdojo_url }}
         defectdojo_endpoint: ${{ github.event.inputs.endpoint }}
-        name: ${{ format('{0}-{1}',github.event.inputs.scan-name,steps.date.outputs.date) }}
+        name: ${{ format('{0}-{1}',github.event.inputs.scan-name,env.datetime) }}
         description: ${{ github.event.inputs.desc }}
         version: ${{ github.event.inputs.version }}
-        target_start: ${{ github.event.repository.updated_at }}
-        target_end: ${{ github.event.repository.updated_at }}
+        target_start: ${{ env.date }}
+        target_end: ${{ env.date }}
         product: ${{ github.event.inputs.product }}
         
     - name: Show DefectDojo response
