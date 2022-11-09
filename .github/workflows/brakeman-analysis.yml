@@ -80,8 +80,8 @@ jobs:
         name: ${{ format('{0}-{1}',github.event.inputs.scan-name,steps.date.outputs.date) }}
         description: ${{ github.event.inputs.desc }}
         version: ${{ github.event.inputs.version }}
-        target_start: ${{ github.event.repository.updated_at | sed 's/:/./g' }}
-        target_end: ${{ github.event.repository.updated_at | sed 's/:/./g' }}
+        target_start: ${{ github.event.repository.updated_at }}
+        target_end: ${{ github.event.repository.updated_at }}
         product: ${{ github.event.inputs.product }}
         
     - name: Show DefectDojo response
