@@ -53,7 +53,9 @@ jobs:
         echo "{date}={$(date +'%Y-%m-%d')}" >> $GITHUB_STATE
   
     - name: Check date
-      run: echo '${{ env.date }}'
+      run: echo $TAG_NAME
+      env:
+          TAG_NAME: nightly-tag-${{ env.date }}
   
     - name: Get date time as env
       id: datetime
