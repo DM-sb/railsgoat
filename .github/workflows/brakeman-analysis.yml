@@ -51,7 +51,10 @@ jobs:
       id: date
       run: |
         echo "{date}={$(date +'%Y-%m-%d')}" >> $GITHUB_STATE
-        
+  
+    - name: Check date
+      run: echo ${{ env.date }}
+  
     - name: Get date time as env
       id: datetime
       run: |
