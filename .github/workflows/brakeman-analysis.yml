@@ -49,20 +49,11 @@ jobs:
       
     - name: Get current date as env
       id: date
-      run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
-      
-    - name: Echo date
-      run: echo "$(date +'%Y-%m-%d')"
-  
-    - name: Check date
-      run: echo $TAG_NAME
-      env:
-          TAG_NAME: nightly-tag-${{ steps.date.outputs.date }}
+      run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_STATE
   
     - name: Get date time as env
       id: datetime
-      run: |
-        echo "{datetime}={$(date +'%Y-%m-%dT%H:%M:%S')}" >> $GITHUB_STATE
+      run: echo "datetime=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_STATE
 
     # Customize the ruby version depending on your needs
     - name: Setup Ruby
