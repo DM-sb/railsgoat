@@ -87,7 +87,7 @@ jobs:
     - name: Show DefectDojo response
       run: |
         set -e
-        printf '%s\n' '${{ steps.engagements.outputs.response }}'
+        printf '%s\n' '${{ steps.engagements.outputs.response.id }}'
       
     - name: Print the ID of the newly generated engagement. 
       run:  echo "${{ steps.engagements.outputs.response.id }}"
