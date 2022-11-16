@@ -9,13 +9,6 @@
 name: Brakeman Scan
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    # The branches below must be a subset of the branches above
-    branches: [ master ]
-  schedule:
-    - cron: '34 2 * * 6'
   workflow_dispatch: 
     inputs:
       scan-name:
@@ -97,7 +90,7 @@ jobs:
         printf '%s\n' '${{ steps.engagements.outputs.response }}'
       
     - name: Print the ID of the newly generated engagement. 
-      run:  echo "${{ fromJson(steps.engagements.outputs.response).id }}"
+      run:  echo "${{ fromJson(steps.engagements.outputs.response) }}"
 
     # Upload the SARIF file generated in the previous step
     - name: Upload SARIF
