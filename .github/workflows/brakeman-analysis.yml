@@ -95,6 +95,21 @@ jobs:
       
     - name: Print the engagement ID
       run: echo '${{ steps.grabid.outputs.engagement_id }}'
+      
+    - name: Publish report
+      id: import-scan
+      uses: ivanamat/defectdojo-import-scan@v1
+      with:
+        token: ${{ secrets.DEFECTOJO_TOKEN }}
+        defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
+        file: output.sarif.json
+        scan_type: Brakeman Scan
+        engagement: ${{ steps.grabid.outputs.engagement_id }}
+        
+  - name: Show response
+    run: |
+      set -e
+      printf '%s\n' '${{ steps.import-scan.outputs.response }}'
 
     # Upload the SARIF file generated in the previous step
     - name: Upload SARIF
