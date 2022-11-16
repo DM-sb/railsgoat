@@ -67,7 +67,7 @@ jobs:
     - name: Scan
       continue-on-error: true
       run: |
-        brakeman -f sarif -o output.sarif.json .
+        brakeman -f sarif -o output.json .
       
     # Create a defectdojo engagement with the the results of the Brakeman scan
     - name: Create new Engagement in DefectDojo
@@ -110,9 +110,3 @@ jobs:
       run: |
         set -e
         printf '%s\n' '${{ steps.import-scan.outputs.response }}'
-
-    # Upload the SARIF file generated in the previous step
-    - name: Upload SARIF
-      uses: github/codeql-action/upload-sarif@v2
-      with:
-        sarif_file: output.sarif.json
