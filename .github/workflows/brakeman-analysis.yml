@@ -90,7 +90,7 @@ jobs:
         printf '%s\n' '${{ steps.engagements.outputs.response.id }}'
       
     - name: Print the ID of the newly generated engagement. 
-      run:  echo "${{ steps.engagements.outputs.response.id }}"
+      run:  echo "${{ steps.engagements.outputs.response }}" | jq '.id'
 
     # Upload the SARIF file generated in the previous step
     - name: Upload SARIF
