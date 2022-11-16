@@ -106,10 +106,10 @@ jobs:
         scan_type: Brakeman Scan
         engagement: ${{ steps.grabid.outputs.engagement_id }}
         
-  - name: Show response
-    run: |
-      set -e
-      printf '%s\n' '${{ steps.import-scan.outputs.response }}'
+    - name: Show response
+      run: |
+        set -e
+        printf '%s\n' '${{ steps.import-scan.outputs.response }}'
 
     # Upload the SARIF file generated in the previous step
     - name: Upload SARIF
