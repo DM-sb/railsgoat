@@ -100,8 +100,8 @@ jobs:
       id: import-scan
       uses: ivanamat/defectdojo-import-scan@v1
       with:
-        token: ${{ secrets.DEFECTOJO_TOKEN }}
-        defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
+        token: ${{ secrets.defectdojo_token }}
+        defectdojo_url: ${{ secrets.defectdojo_url }}
         file: output.sarif.json
         scan_type: Brakeman Scan
         engagement: ${{ steps.grabid.outputs.engagement_id }}
