@@ -89,8 +89,12 @@ jobs:
         set -e
         printf '%s\n' '${{ steps.engagements.outputs.response.id }}'
       
-    - name: Print the ID of the newly generated engagement. 
-      run:  echo "${{ steps.engagements.outputs.response }}" | jq '.id'
+    - name: Grab ID of the newly generated engagement. 
+      id: grabid
+      run: echo "engagement_id=$(jq '.id' >> $GITHUB_OUTPUT')" >> $GITHUB_OUTPUT
+      
+    - name: Print the engagement ID
+      run: echo '${{ steps.grabid.outputs.engagement_id }}'
 
     # Upload the SARIF file generated in the previous step
     - name: Upload SARIF
