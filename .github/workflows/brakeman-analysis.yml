@@ -91,7 +91,7 @@ jobs:
       
     - name: Grab ID of the newly generated engagement. 
       id: grabid
-      run: echo "engagement_id=$(jq '.id' >> $GITHUB_OUTPUT')" >> $GITHUB_OUTPUT
+      run: echo "engagement_id=$(jq '.id' '${{ steps.engagements.outputs.response.id }}')" >> $GITHUB_OUTPUT
       
     - name: Print the engagement ID
       run: echo '${{ steps.grabid.outputs.engagement_id }}'
