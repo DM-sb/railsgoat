@@ -67,7 +67,7 @@ jobs:
     - name: Scan
       continue-on-error: true
       run: |
-        brakeman -f sarif -o output.json .
+        brakeman -o output.json .
       
     # Create a defectdojo engagement with the the results of the Brakeman scan
     - name: Create new Engagement in DefectDojo
