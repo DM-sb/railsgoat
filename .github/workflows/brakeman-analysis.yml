@@ -102,7 +102,7 @@ jobs:
       with:
         token: ${{ secrets.defectdojo_token }}
         defectdojo_url: ${{ secrets.defectdojo_url }}
-        file: output.sarif.json
+        file: output.json
         scan_type: Brakeman Scan
         engagement: ${{ steps.grabid.outputs.engagement_id }}
         
